@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "__font_pwks_ui";
+  src: url("/assets/font/font_.ttf");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "__font_pwks_ui";
+  src: url("/assets/font/b37cec1772007bb4bf27090dc9597172.eot");
+  src: url("/assets/font/b37cec1772007bb4bf27090dc9597172.eot?#iefix")
+      format("embedded-opentype"),
+    url("/assets/font/b37cec1772007bb4bf27090dc9597172.woff") format("woff"),
+    url("/assets/font/b37cec1772007bb4bf27090dc9597172.woff2") format("woff2"),
+    url("/assets/font/b37cec1772007bb4bf27090dc9597172.ttf") format("truetype"),
+    url("/assets/font/b37cec1772007bb4bf27090dc9597172.svg#PSL-Kittithada")
+      format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-primary: #6b34c5;
+  --color-white: #ffff;
+
+  --toastify-icon-color-info: var(--color-white) !important;
+  --toastify-icon-color-success: var(--color-white) !important;
+  --toastify-icon-color-warning: var(--color-white) !important;
+  --toastify-icon-color-error: var(--color-white) !important;
+}
+
+/* Toast */
+
+.Toastify__toast-theme--light.Toastify__toast--success {
+  background-color: #07bc0c !important;
+}
+
+.Toastify__toast-theme--light.Toastify__toast--info {
+  background-color: #3498db !important;
+}
+
+.Toastify__toast-theme--light.Toastify__toast--warning {
+  background-color: #f1c40f !important;
+}
+
+.Toastify__toast-theme--light.Toastify__toast--error {
+  background-color: #e74c3c !important;
+}
+
+.Toastify__toast-body {
+  color: var(--color-white);
+}
+
+.Toastify__close-button {
+  color: var(--color-white) !important;
+}
+
+.Toastify__progress-bar--info,
+.Toastify__progress-bar--success,
+.Toastify__progress-bar--warning,
+.Toastify__progress-bar--error {
+  color: white !important;
+  background: white !important;
+}
+
+body {
+  font-family: "__font_pwks_ui";
+  background-color: #ececec;
+}
+
+/* FONT */
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.h2-pwks {
+  font-size: 2.5rem;
+}
+
+.h3-pwks {
+  font-size: 2rem;
+}
+
+.h4-pwks {
+  font-size: 1.5rem;
+}
+
+.p-pwks {
+  font-size: 1.3rem;
+}
+
+.main {
+  height: 100%;
+  min-height: calc(100vh - 352px);
+  width: 100%;
+}
+
+.divider-solid {
+  background-color: black;
+  opacity: 0.1;
+  width: 100%;
+}
+
+/* BUTTON */
+.btn-main{
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+.btn-main:hover{
+  color: #ececec;
+  background-color: #461b8b;
+}
+
+/* CURSOR */
+.cursor-main {
+  cursor: pointer;
+}
