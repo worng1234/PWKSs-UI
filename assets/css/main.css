@@ -21,9 +21,63 @@
   font-display: swap;
 }
 
+/* Font Kanit */
+@font-face{
+  font-family: "__font_pwks_kanit";
+  src: url('/assets/font/Kanit/Kanit-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "__font_pwks_kanit";
+  src: url('/assets/font/Kanit/Kanit-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "__font_pwks_kanit";
+  src: url('/assets/font/Kanit/Kanit-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "__font_pwks_kanit";
+  src: url('/assets/font/Kanit/Kanit-Black.ttf');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Font IBM  */
+@font-face{
+  font-family: "__font_pwks_IBM";
+  src: url('/assets/font/IBM_Plex_Sans_Thai_Looped/IBMPlexSansThaiLooped-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --color-primary: #6b34c5;
+  --color-primary: #1B78AF;
+  --color-primary-op: #086784;
+  --color-secondary: #B1B7BA;
   --color-white: #ffff;
+  --color-success: #338309;
+  --color-success-op: #006955;
+  --color-warning: #FBCE02;
+  --color-warning-op: #E8A628;
+  --color-danger: #BC0000;
+  --color-info: #E1DBE5;
+  --color-light: #F7F7F9;
+  --color-dark: #091B1A;
+  --color-school: #833990;
+  --color-school-op: #BB99B7;
 
   --toastify-icon-color-info: var(--color-white) !important;
   --toastify-icon-color-success: var(--color-white) !important;
@@ -66,7 +120,7 @@
 }
 
 body {
-  font-family: "__font_pwks_ui";
+  font-family: "__font_pwks_IBM";
   background-color: #ececec;
 }
 
@@ -75,24 +129,48 @@ body {
   font-weight: 400;
 }
 
+.fw-500 {
+  font-weight: 500;
+}
+
 .fw-700 {
   font-weight: 700;
 }
 
-.h2-pwks {
-  font-size: 2.5rem;
+.fw-900 {
+  font-weight: 900;
 }
 
-.h3-pwks {
-  font-size: 2rem;
+h1{
+  font-family: "__font_pwks_kanit";
 }
 
-.h4-pwks {
-  font-size: 1.5rem;
+h2{
+  font-family: "__font_pwks_kanit";
+}
+
+h3{
+  font-family: "__font_pwks_kanit";
+}
+
+h4{
+  font-family: "__font_pwks_kanit";
+}
+
+h5{
+  font-family: "__font_pwks_kanit";
+}
+
+h6{
+  font-family: "__font_pwks_kanit";
 }
 
 .p-pwks {
   font-size: 1.3rem;
+}
+
+.fm-kanit{
+  font-family: "__font_pwks_kanit";
 }
 
 .main {
@@ -110,7 +188,7 @@ body {
 /* BUTTON */
 .btn-main{
   color: var(--color-white);
-  background-color: var(--color-primary);
+  background-color: var(--color-school);
 }
 
 .btn-main:hover{
@@ -121,4 +199,15 @@ body {
 /* CURSOR */
 .cursor-main {
   cursor: pointer;
+}
+
+/* Table */
+.th-color-main{
+  background-color: #f6c244 !important;
+  color: black !important;
+}
+
+.form-check-input:checked {
+  background-color: #000000;
+  border-color: #000000;
 }
