@@ -29,6 +29,17 @@ const globalMixin = {
 
         },
 
+        formatNumberToLocal(num) {
+            const number = parseFloat(num)
+            const options = {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+            const formatted = Number(number).toLocaleString('en');
+
+            return formatted
+        },
+
     }
 }
 

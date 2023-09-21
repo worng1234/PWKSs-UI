@@ -6,8 +6,8 @@
                 <div class="box-main-sub-nav-menu">
                     <div class="box-profile-nav mt-3">
                         <img src="../assets/img/user-img/user-profile.png" alt="user" class="box-img-profile-nav">
-                        <div class="mt-3 ms-4" align="left">
-                            <h3 class="h4-pwks fw-700" style="margin-bottom: 0; padding-bottom: 0;">กิตติกรณ์ อรุณภพ</h3>
+                        <div class="mt-2 ms-4" align="left">
+                            <h4 class="h4-pwks fw-500" style="margin-bottom: 0; padding-bottom: 1rem;">กิตติกรณ์ อรุณภพ</h4>
 
                             <p class="p-pwks" style="margin-bottom: 0; padding-bottom: 0; opacity: 0.5; margin-top: -10px;">
                                 <span>
@@ -22,18 +22,20 @@
 
                     <div class="grid-nav-sub-menu grid-column-sub-menu mt-2">
                         <div class="box-menu" v-for="menus in menu" style="margin-top: 8%;">
-                            <div class="d-flex cursor-main" style="color: white; margin-top: 9%;" @click="this.gotoPage(menus.link)">
+                            <div class="d-flex cursor-main" style="color: white; margin-top: 9%;"
+                                @click="nextPage(menus.link)">
                                 <Icon :name="menus.icon" style="font-size: 1.5rem;" class="ms-3" />
-                                <h4 class="h4-pwks fw-700 ms-1">{{ menus.menuName }}</h4>
+                                <h6 class="h5-pwks fw-500 ms-1 mt-1">{{ menus.menuName }}</h6>
                             </div>
                         </div>
                     </div>
 
                     <div class="divider-solid mt-5"></div>
 
-                    <div class="d-flex justify-content-center mt-4 cursor-main" style="color: rgb(125, 52, 243)" @click="this.showAlert('ออกจากระบบสำเร็จ', 'success')">
+                    <div class="d-flex justify-content-center mt-4 cursor-main" style="color: rgb(125, 52, 243)"
+                        @click="this.showAlert('ออกจากระบบสำเร็จ', 'success')">
                         <Icon name="material-symbols:door-open-outline" style="font-size: 2rem;" class="ms-3" />
-                        <h4 class="h3-pwks fw-700 ms-1">ออกจากระบบ</h4>
+                        <h4 class="h3-pwks fw-500 ms-1">ออกจากระบบ</h4>
                     </div>
 
                 </div>
@@ -53,6 +55,9 @@ export default {
         clickOpenSubMenu: {
             type: Function
         },
+        clickCloseSubMenu: {
+            type: Function
+        },
         openSubMenu: {
             type: Boolean,
             default: false
@@ -61,11 +66,11 @@ export default {
     data() {
         return {
             menu: [
-                {id: 1, menuName: 'หน้าหลัก', link: '/', icon: 'material-symbols:house'},
-                {id: 2, menuName: 'เช็คชื่อ', link: '/attandance', icon: 'material-symbols:check-circle-rounded'},
-                {id: 3, menuName: 'ตารางเรียน', link: '/subject', icon: 'material-symbols:calendar-month'},
-                {id: 4, menuName: 'ห้องเรียน', link: '/homeRoom', icon: 'material-symbols:school-rounded'},
-                {id: 5, menuName: 'โปรไฟล์', link: '/profile', icon: 'material-symbols:settings-account-box'},
+                { id: 1, menuName: 'หน้าหลัก', link: '/', icon: 'material-symbols:house' },
+                { id: 2, menuName: 'เช็คชื่อ', link: '/attandance', icon: 'material-symbols:check-circle-rounded' },
+                { id: 3, menuName: 'ตารางสอน', link: '/manageSchedule', icon: 'material-symbols:calendar-month' },
+                { id: 4, menuName: 'ห้องเรียน', link: '/homeRoom', icon: 'material-symbols:school-rounded' },
+                { id: 5, menuName: 'โปรไฟล์', link: '/profile', icon: 'material-symbols:settings-account-box' },
             ]
         }
     },
@@ -141,6 +146,10 @@ export default {
         },
         stopInterval(interval) {
             clearInterval(interval)
+        },
+        nextPage(link){
+            this.gotoPage(link)
+            this.clickCloseSubMenu()
         }
     },
 }
@@ -197,5 +206,11 @@ export default {
     background-color: rgb(125, 52, 243);
     border-radius: 5px;
     box-shadow: 5px 5px 12px 0 rgb(175, 175, 175);
+}
+
+@media screen and (min-width: 320px) and (max-width: 589px) {
+    .mg-t-nav {
+        margin-top: 36px;
+    }
 }
 </style>
