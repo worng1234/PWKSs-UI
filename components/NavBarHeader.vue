@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="nav-head nav-item">
-            <div class="d-flex justify-content-center box-title-nav cursor-main" @click="this.gotoPage('/')" >
+            <div class="d-flex justify-content-center box-title-nav cursor-main" @click="gotoIndex()" >
                 <Icon name="ic:sharp-display-settings" class="img-logo-pwks-nav" />
                 <h2 class="f-nav fw-400" style="color: var(--color-school);">PWKSs</h2>
             </div>
@@ -37,6 +37,11 @@ export default {
         },
         clickCloseSubMenu(){
             this.openSubMenu = false
+        },
+        gotoIndex(){
+            if(this.getStore().setCheckLogin()){
+                this.gotoPage('/')
+            }
         }
     },
 }

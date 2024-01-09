@@ -28,13 +28,13 @@
                         <div class="input-group me-3 mt-3 input-detail" v-if="!checkChangeSchedule">
                             <label class="input-group-text" for="class-add">รหัสวิชา</label>
                             <input type="text" class="form-control" id="class-add" placeholder="กรอกรหัสวิชา"
-                                v-model="activitySchedule">
+                                v-model="subjectCode">
                         </div>
 
                         <div class="input-group me-3 mt-3 input-detail" v-if="!checkChangeSchedule">
                             <label class="input-group-text" for="class-add">ชื่อรายวิชา</label>
                             <input type="text" class="form-control" id="class-add" placeholder="กรอกชื่อรายวิชา"
-                                v-model="activitySchedule">
+                                v-model="subjectName">
                         </div>
 
                         <div class="d-flex mt-3" v-if="!checkChangeSchedule">
@@ -45,6 +45,9 @@
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
                                     <option value="vc">ปวช.</option>
                                 </select>
                             </div>
@@ -106,13 +109,13 @@
                         <div class="input-group me-3 mt-3 input-detail" v-if="!checkChangeSchedule">
                             <label class="input-group-text" for="class-add">รหัสวิชา</label>
                             <input type="text" class="form-control" id="class-add" placeholder="กรอกรหัสวิชา"
-                                v-model="activitySchedule">
+                                v-model="subjectCode">
                         </div>
 
                         <div class="input-group me-3 mt-3 input-detail" v-if="!checkChangeSchedule">
                             <label class="input-group-text" for="class-add">ชื่อรายวิชา</label>
                             <input type="text" class="form-control" id="class-add" placeholder="กรอกชื่อรายวิชา"
-                                v-model="activitySchedule">
+                                v-model="subjectName">
                         </div>
 
                         <div class="d-flex mt-3" v-if="!checkChangeSchedule">
@@ -123,6 +126,9 @@
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
                                     <option value="vc">ปวช.</option>
                                 </select>
                             </div>
@@ -154,7 +160,7 @@
                         <Icon name="humbleicons:save" style="margin-top: -3%; font-size: 1.2rem;" />
                         บันทึก
                     </button>
-                    <button class="btn btn-danger rounded-pill fm-kanit" @click="removeSchedule()">
+                    <button class="btn btn-danger rounded-pill fm-kanit" @click="warningModal()">
                         <Icon name="material-symbols:delete-outline" style="margin-top: -3%; font-size: 1.2rem;" />
                         ลบข้อมูล
                     </button>
@@ -291,7 +297,7 @@
                 </div>
 
                 <div class="modal-footer-pwks mt-4" align="center">
-                    <button class="btn btn-warning rounded-pill fm-kanit me-3" @click="closeModal">
+                    <button class="btn btn-warning rounded-pill fm-kanit me-3" @click="removeData(type)">
                         <Icon name="material-symbols:delete-outline" style="margin-top: -3%; font-size: 1.2rem;" />
                         ลบข้อมูล
                     </button>
@@ -307,6 +313,7 @@
 </template>
 
 <script>
+import callApi from '../api/callApi'
 export default {
     setup() {
 
@@ -324,12 +331,22 @@ export default {
         daySchedule: {
             type: String,
         },
+        column: {
+            type: String,
+        },
         period: {
             type: Number
         },
         listStudent: {
             type: Array,
             default: []
+        },
+        dataSchedule: {
+            type: Object,
+            default: {}
+        },
+        manageSchedule: {
+            type: Function,
         }
     },
     data() {
@@ -351,6 +368,8 @@ export default {
             checkChangeSchedule: false,
             classSchedule: '',
             roomSchedule: '',
+            subjectName: '',
+            subjectCode: '',
             activitySchedule: '',
             vcGrade: false,
             checkValidate: {
@@ -360,16 +379,69 @@ export default {
     },
     mounted() {
         this.typeModal = this.type
+
+        if(this.dataSchedule.class !== undefined && this.dataSchedule.class != ''){
+            this.subjectCode = this.dataSchedule.code
+            this.subjectName = this.dataSchedule.nameSubject
+            this.classSchedule = this.dataSchedule.class
+            this.roomSchedule = this.dataSchedule.room
+
+        }else if (this.dataSchedule.activityName !== undefined && this.dataSchedule.activityName != ''){
+            this.checkChangeSchedule = this.dataSchedule.activity
+            this.activitySchedule = this.dataSchedule.activityName
+        }
+
     },
     methods: {
-        manageSchedule() {
+        async manageSchedule() {
             let checkValidate = this.validateSchedule()
 
             if (checkValidate) {
+                this.checkValidate.schedule = false
+
+                let data = {
+                    t_id: 2,
+                    column: this.column,
+                    activity: this.checkChangeSchedule === false ? '' : this.activitySchedule,
+                    class: this.classSchedule,
+                    room: this.roomSchedule,
+                    code: this.subjectCode,
+                    name: this.subjectName,
+                    term: 1,
+                    year: 2566,
+                }
+
                 this.typeModal = 'loading'
-                setTimeout(() => {
-                    this.typeModal = 'success'
-                }, 3000);
+
+                await callApi.addAndEditSchedule(data).then( res => {
+                    if(res.code == 0){
+                        this.typeModal = 'success'
+                        this.manageSchedule()
+                    }else{
+                        this.typeModal = 'danger'
+                    }
+                })
+            }
+        },
+        async removeData(type) {
+            this.typeModal = 'loading'
+            if(type == 'edit-schedule'){
+
+                let data = {
+                    t_id: 2,
+                    column: this.column,
+                    term: 1,
+                    year: 2566,
+                }
+
+                await callApi.removeSchedule(data).then( res => {
+                    if(res.code == 0){
+                        this.typeModal = 'success'
+                        this.manageSchedule()
+                    }else{
+                        this.typeModal = 'danger'
+                    }
+                })
             }
         },
         validateSchedule() {
@@ -381,10 +453,11 @@ export default {
                 }
 
             } else if (!this.checkChangeSchedule) {
-                if (this.classSchedule == '' || this.roomSchedule == '') {
+                if (this.classSchedule == '' || this.roomSchedule == '' || this.subjectCode == '' || this.subjectName == '') {
                     this.checkValidate.schedule = true
 
                     return false
+
                 }
             }
 
@@ -400,7 +473,7 @@ export default {
                 this.roomList = [1, 2, 3, 4, 5, 6]
             }
         },
-        removeSchedule() {
+        warningModal(){
             this.typeModal = 'warning'
         },
         cancelRemove() {

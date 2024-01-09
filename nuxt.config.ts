@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devServer: {
+    host: 'localhost',
     port: 4500,
   },
 
@@ -29,5 +30,6 @@ export default defineNuxtConfig({
 
   plugins: [
     { src: '~/plugins/createStore.js', mode: 'client' },
+    { src: '~/plugins/createStructure.js' },
   ],
 })

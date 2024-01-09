@@ -1,5 +1,9 @@
 <template>
     <div>
+        <Head>
+            <Title>PWKs SYSTEM</Title>
+        </Head>
+
         <NavBarHeader />
         <main class="main mg-t-body">
             <slot />
@@ -9,15 +13,21 @@
 
 <script>
 export default {
+
     setup () {
-        
 
         return {}
     },
+
+    data() {
+        return {
+
+        }
+    },
+
     mounted() {
         let bootstrab = document.createElement("script");
         bootstrab.setAttribute('src', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js');
-        document.body.appendChild(bootstrab);
     },
 }
 </script>

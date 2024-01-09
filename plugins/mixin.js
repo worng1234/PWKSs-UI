@@ -1,6 +1,11 @@
+import { store } from '~/store/manageStore'
+
 const globalMixin = {
     methods: {
-
+        getStore() {
+            return store
+        },
+        
         showAlert(title, type, position) {
             if (type == 'success') {
                 useNuxtApp().$toast.success(title)

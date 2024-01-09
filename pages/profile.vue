@@ -27,8 +27,8 @@
                 <div>
                     <ul class="nav nav-tabs width-tab nav-fill justify-content-center" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link fm-kanit fs-tab active" id="attend-and-homeroom-tab" data-bs-toggle="tab"
-                                data-bs-target="#attend-and-homeroom-tab-pane" type="button" role="tab"
+                            <button class="nav-link fm-kanit fs-tab active" id="attend-and-homeroom-tab"
+                                data-bs-toggle="tab" data-bs-target="#attend-and-homeroom-tab-pane" type="button" role="tab"
                                 aria-controls="attend-and-homeroom-tab-pane" aria-selected="true">เช็คชื่อ</button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -62,7 +62,7 @@
                                                 style="border-radius: 0 8px 0 0;">ขาด</th>
                                         </tr>
                                     </thead>
-                                    <tbody align="center" >
+                                    <tbody align="center">
                                         <tr v-for="(student, index) in listStudent">
                                             <th scope="row" :hidden="disTableHeadAndBody">{{ index + 1 }}</th>
                                             <td :id="`code-student-${index}`" :hidden="disTableHeadAndBody">{{ student.code
@@ -111,8 +111,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade " id="schedule-tab-pane" role="tabpanel"
-                            aria-labelledby="schedule-tab" tabindex="0">
+                        <div class="tab-pane fade " id="schedule-tab-pane" role="tabpanel" aria-labelledby="schedule-tab"
+                            tabindex="0">
                             <div class="p-table-schedule">
                                 <div class="mt-2">
                                     <h3>ตารางสอน ปีการศึกษา 1/2566</h3>
@@ -153,14 +153,27 @@
                                                             <td class="day fm-kanit">{{ schedule.day }}</td>
                                                             <td class="active" v-for="(subject, index) in schedule.subject">
                                                                 <div class="cursor-main"
-                                                                    v-if="schedule.subject[index].room != ''"
+                                                                    v-if="schedule.subject[index].class != ''"
                                                                     @click="openModal(schedule.day, index)">
-                                                                    <h4>ว20222</h4>
-                                                                    <h4>{{ subject.room }}</h4>
+                                                                    <h4>{{ subject.code }}</h4>
+                                                                    <h4>{{ `${subject.class == 'vc' ? 'ปวช.' :
+                                                                        subject.class}${subject.class == 'vc' ? ' ' :
+                                                                            '/'}${subject.room}` }}</h4>
                                                                     <div class="hover">
-                                                                        <h4>ว20222</h4>
-                                                                        <h4>{{ subject.room }}</h4>
-                                                                        <p>{{ subject.time }}</p>
+                                                                        <h4>{{ subject.code }}</h4>
+                                                                        <h4 style="padding: 3px 0;">{{ subject.nameSubject
+                                                                        }}</h4>
+                                                                        <p>{{ `${subject.class == 'vc' ? 'ปวช.' :
+                                                                            subject.class}${subject.class == 'vc' ? ' ' :
+                                                                                '/'}${subject.room}` }}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div v-else-if="schedule.subject[index].activity === true"
+                                                                    @click="openModal(schedule.day, index)">
+                                                                    <h4>{{ subject.activityName }}</h4>
+                                                                    <div class="hover">
+                                                                        <h4>กิจกรรม</h4>
+                                                                        <h4>{{ subject.activityName }}</h4>
                                                                     </div>
                                                                 </div>
                                                                 <div v-else>
@@ -196,6 +209,7 @@
 </template>
 
 <script>
+import callApi from '../api/callApi'
 export default {
     setup() {
 
@@ -410,78 +424,7 @@ export default {
                     lastName: 'นักทำ'
                 },
             ],
-            listSchedule: [
-                {
-                    day: 'จันทร์',
-                    subject: [
-                        { time: '08:40', room: '4/5' },
-                        { time: '09:30', room: '4/5' },
-                        { time: '10:20', room: '' },
-                        { time: '11:10', room: '' },
-                        { time: '12:00', room: '3/2' },
-                        { time: '13:00', room: '' },
-                        { time: '13:50', room: '6/1' },
-                        { time: '14:40', room: '6/2' },
-                        { time: '15:30', room: '1/5' },
-                    ]
-                },
-                {
-                    day: 'อังคาร',
-                    subject: [
-                        { time: '08:40', room: '' },
-                        { time: '09:30', room: '' },
-                        { time: '10:20', room: '5/1' },
-                        { time: '11:10', room: 'ปวช.' },
-                        { time: '12:00', room: '4/4' },
-                        { time: '13:00', room: '' },
-                        { time: '13:50', room: '4/6' },
-                        { time: '14:40', room: '6/2' },
-                        { time: '15:30', room: '' },
-                    ]
-                },
-                {
-                    day: 'พุธ',
-                    subject: [
-                        { time: '08:40', room: 'ปวช.' },
-                        { time: '09:30', room: '2/4' },
-                        { time: '10:20', room: '6/6' },
-                        { time: '11:10', room: '' },
-                        { time: '12:00', room: '4/4' },
-                        { time: '13:00', room: '' },
-                        { time: '13:50', room: '1/2' },
-                        { time: '14:40', room: '1/2' },
-                        { time: '15:30', room: '' },
-                    ]
-                },
-                {
-                    day: 'พฤหัสบดี',
-                    subject: [
-                        { time: '08:40', room: '' },
-                        { time: '09:30', room: '2/4' },
-                        { time: '10:20', room: '4/2' },
-                        { time: '11:10', room: '' },
-                        { time: '12:00', room: '1/1' },
-                        { time: '13:00', room: 'ปวช.' },
-                        { time: '13:50', room: 'ปวช.' },
-                        { time: '14:40', room: '' },
-                        { time: '15:30', room: '5/2' },
-                    ]
-                },
-                {
-                    day: 'ศุกร์',
-                    subject: [
-                        { time: '08:40', room: '' },
-                        { time: '09:30', room: '1/3' },
-                        { time: '10:20', room: '1/3' },
-                        { time: '11:10', room: '' },
-                        { time: '12:00', room: '' },
-                        { time: '13:00', room: '4/6' },
-                        { time: '13:50', room: '' },
-                        { time: '14:40', room: '4/3' },
-                        { time: '15:30', room: '4/3' },
-                    ]
-                },
-            ],
+            listSchedule: [],
             isModal: false,
             typeModal: '',
             period: 0,
@@ -490,6 +433,7 @@ export default {
         }
     },
     mounted() {
+        this.getSchedule()
         let width = window.screen.width;
 
         if (width >= 320 && width <= 420) {
@@ -503,6 +447,124 @@ export default {
         })
     },
     methods: {
+        async getSchedule() {
+            const data = {
+                t_id: 2,
+                term: 1,
+                year: 2566
+            }
+
+            let day = [
+                {
+                    id: 0,
+                    key: 'a',
+                    nameDay: 'จันทร์'
+                },
+                {
+                    id: 1,
+                    key: 'b',
+                    nameDay: 'อังคาร'
+                },
+                {
+                    id: 2,
+                    key: 'c',
+                    nameDay: 'พุธ'
+                },
+                {
+                    id: 3,
+                    key: 'd',
+                    nameDay: 'พฤหัสบดี'
+                },
+                {
+                    id: 4,
+                    key: 'e',
+                    nameDay: 'ศุกร์'
+                },
+            ]
+
+            let schedule = []
+
+            await callApi.getScheduleById(data).then(res => {
+                if (res.code == 0) {
+                    let keyObj = Object.keys(res.result);
+                    let i = 0
+
+                    let entries = Object.entries(res.result)
+
+                    for (const list of keyObj) {
+                        if (keyObj[i] != 'id' && keyObj[i] != 't_id' && keyObj[i] != 'tc_term' && keyObj[i] != 'tc_year' && keyObj[i] != 'created_at' && keyObj[i] != 'updated_at') {
+                            let splitFirst = keyObj[i].split('_');
+                            let splitSecond = splitFirst[1].split("");
+
+                            let addDay = day.filter(e => {
+                                if (e.key == splitSecond[0]) {
+                                    return e
+                                }
+                            })
+
+                            let getDataSchedule = entries.filter(([key, value]) => {
+                                if (key == keyObj[i]) {
+                                    return value
+                                }
+                            })
+
+                            let dataSchedule = {
+                                code: '',
+                                nameSubject: '',
+                                class: '',
+                                room: '',
+                                activity: false,
+                                activityName: ''
+                            }
+
+                            if (getDataSchedule.length > 0) {
+                                try {
+                                    let splitNameSubject = getDataSchedule[0][1].split("_");
+
+                                    if (splitNameSubject.length == 1) {
+                                        dataSchedule.activity = true,
+                                            dataSchedule.activityName = getDataSchedule[0][1]
+                                    } else {
+                                        dataSchedule.code = splitNameSubject[0]
+                                        dataSchedule.nameSubject = splitNameSubject[1]
+                                        dataSchedule.class = splitNameSubject[2]
+                                        dataSchedule.room = splitNameSubject[3]
+                                    }
+
+                                } catch (error) {
+                                    dataSchedule.activity = true,
+                                        dataSchedule.activityName = getDataSchedule[0][1]
+                                }
+
+                            }
+
+                            if (schedule.length == 0) {
+                                schedule.push({
+                                    column: 'tc_' + addDay[0].key,
+                                    day: addDay[0].nameDay,
+                                    subject: []
+                                })
+                            }
+
+                            if (schedule[addDay[0].id] === undefined) {
+                                schedule.push({
+                                    column: 'tc_' + addDay[0].key,
+                                    day: addDay[0].nameDay,
+                                    subject: [{ ...dataSchedule }]
+                                })
+                            } else {
+                                schedule[addDay[0].id].subject.push({ ...dataSchedule })
+                            }
+                        }
+
+                        i++
+                    }
+                    this.listSchedule = schedule
+                }
+            })
+
+
+        },
         submitAttend() {
             let i = 0
             let dataStudent = []
@@ -786,6 +848,7 @@ export default {
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s linear 0s;
+    cursor: pointer;
 }
 
 .schedule-table table tbody td .hover-add {

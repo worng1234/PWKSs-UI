@@ -69,8 +69,9 @@ export default {
                 { id: 1, menuName: 'หน้าหลัก', link: '/', icon: 'material-symbols:house' },
                 { id: 2, menuName: 'เช็คชื่อ', link: '/attandance', icon: 'material-symbols:check-circle-rounded' },
                 { id: 3, menuName: 'ตารางสอน', link: '/manageSchedule', icon: 'material-symbols:calendar-month' },
-                { id: 4, menuName: 'ห้องเรียน', link: '/homeRoom', icon: 'material-symbols:school-rounded' },
-                { id: 5, menuName: 'โปรไฟล์', link: '/profile', icon: 'material-symbols:settings-account-box' },
+                { id: 4, menuName: 'ตารางรวม', link: '/scheduleAll', icon: 'mdi:wallet-outline' },
+                { id: 5, menuName: 'ห้องเรียน', link: '/homeRoom', icon: 'material-symbols:school-rounded' },
+                { id: 6, menuName: 'โปรไฟล์', link: '/profile', icon: 'material-symbols:settings-account-box' },
             ]
         }
     },

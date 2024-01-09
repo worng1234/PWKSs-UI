@@ -242,6 +242,11 @@ export default {
         }
     },
     mounted() {
+
+        if(!this.getStore().setCheckLogin()){
+            this.gotoPage('/login')
+        }
+
         this.langFormat = th;
         this.getDateDashboard()
     },
