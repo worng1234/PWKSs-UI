@@ -83,6 +83,7 @@ export default {
                         this.getStore().setCheckLogin(true)
                         setTimeout(() => {
                             this.isModal = false
+                            // window.location.href = '/pwks-ui'
                             window.location.href = '/'
                         },1000)
                         

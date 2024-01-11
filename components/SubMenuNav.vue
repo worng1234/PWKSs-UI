@@ -168,6 +168,7 @@ export default {
                 this.typeModal = ''
 
                 setTimeout(() => {
+                    // window.location.href = '/pwks-ui/login'
                     window.location.href = '/login'
                 }, 500);
                 

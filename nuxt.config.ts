@@ -1,5 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  app: {
+    // baseURL: '/pwks-ui/'
+    baseURL: '/'
+  },
+
   devServer: {
     host: 'localhost',
     port: 4500,
@@ -13,7 +19,7 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
 
-  build:{
+  build: {
     transpile: [
       "tslib",
     ]
