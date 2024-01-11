@@ -5,7 +5,7 @@
                 <Icon name="ic:sharp-display-settings" class="img-logo-pwks-nav" />
                 <h2 class="f-nav fw-400" style="color: var(--color-school);">PWKSs</h2>
             </div>
-            <div class="box-sub-nav-icon">
+            <div class="box-sub-nav-icon" v-if="this.getStore().setCheckLogin()" >
                 <Icon name="material-symbols:menu" class="img-logo-pwks-nav" @click="clickOpenSubMenu(true)"
                     v-if="openSubMenu === false" />
                 <Icon name="ic:sharp-close" class="img-logo-pwks-nav" @click="clickOpenSubMenu(false)"

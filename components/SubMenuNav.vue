@@ -33,7 +33,7 @@
                     <div class="divider-solid mt-5"></div>
 
                     <div class="d-flex justify-content-center mt-4 cursor-main" style="color: rgb(125, 52, 243)"
-                        @click="this.showAlert('ออกจากระบบสำเร็จ', 'success')">
+                        @click="logout()">
                         <Icon name="material-symbols:door-open-outline" style="font-size: 2rem;" class="ms-3" />
                         <h4 class="h3-pwks fw-500 ms-1">ออกจากระบบ</h4>
                     </div>
@@ -42,6 +42,8 @@
             </div>
         </div>
     </div>
+
+    <Modal v-if="isModal" :closeModal="closeModal" :type="typeModal"/>
 </template>
 
 <script>
@@ -72,7 +74,9 @@ export default {
                 { id: 4, menuName: 'ตารางรวม', link: '/scheduleAll', icon: 'mdi:wallet-outline' },
                 { id: 5, menuName: 'ห้องเรียน', link: '/homeRoom', icon: 'material-symbols:school-rounded' },
                 { id: 6, menuName: 'โปรไฟล์', link: '/profile', icon: 'material-symbols:settings-account-box' },
-            ]
+            ],
+            isModal: false,
+            typeModal: '',
         }
     },
     mounted() {
@@ -151,6 +155,28 @@ export default {
         nextPage(link){
             this.gotoPage(link)
             this.clickCloseSubMenu()
+        },
+
+        logout(){
+            this.isModal = true
+            this.typeModal = 'loading'
+
+            let logout = this.getStore().resetAuth()
+
+            if(logout){
+                this.isModal = false
+                this.typeModal = ''
+
+                setTimeout(() => {
+                    window.location.href = '/login'
+                }, 500);
+                
+            }
+        },
+
+        closeModal() {
+            this.isModal = false
+            this.typeModal = ''
         }
     },
 }

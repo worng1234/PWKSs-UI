@@ -2,10 +2,10 @@ import { useLocalStorage } from '@vueuse/core'
 
 const optionsState = {
     auth: {
-        access_token: null,
-        profile: null,
+        username: null,
+        first_name: null,
+        last_name: null,
         role: null,
-        group: null
     },
     checkLogin: false
 
@@ -20,6 +20,19 @@ export const store = {
         }
 
         return state.value.main.auth
+    },
+
+    resetAuth(){
+        state.value.main.auth = {
+            username: null,
+            first_name: null,
+            last_name: null,
+            roll: null,
+        }
+
+        state.value.main.checkLogin = false
+
+        return true
     },
 
     setCheckLogin(payload) {

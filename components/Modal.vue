@@ -308,6 +308,36 @@
                 </div>
             </div>
 
+            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'error-login'" v-click-outside="closeModal">
+                <div align="right">
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                </div>
+                <div class="modal-title-pwks" align="center">
+                    <Icon name="ph:x-circle" class="danger-icon mb-2 mt-2" />
+                    <h2>ไม่สำเร็จ</h2>
+                    <h4 class="fw-400">เข้าสู่ระบบไม่สำเร็จ กรุณาแจ้งผู้ดูแลระบบ</h4>
+                </div>
+
+                <div class="modal-footer-pwks mt-4" align="center">
+                    <button class="btn btn-danger rounded-pill fm-kanit" @click="closeModal">ปิด</button>
+                </div>
+            </div>
+
+            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'warning-login'" v-click-outside="closeModal">
+                <div align="right">
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                </div>
+                <div class="modal-title-pwks" align="center">
+                    <Icon name="ph:question" class="warning-icon mb-2 mt-2" />
+                    <h2>ไม่สำเร็จ</h2>
+                    <h4 class="fw-400">ชื่อผู้ใช้หรือรหัสผ่านผิด</h4>
+                </div>
+
+                <div class="modal-footer-pwks mt-4" align="center">
+                    <button class="btn btn-warning rounded-pill fm-kanit" @click="closeModal">ปิด</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </template>

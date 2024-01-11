@@ -28,7 +28,7 @@ export const createStructure = () => {
         },
         (error) => {
             console.log(error.response);
-            throw error
+            return false
         }
     )
 
