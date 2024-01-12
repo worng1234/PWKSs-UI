@@ -7,7 +7,7 @@
                     <div class="box-profile-nav mt-3">
                         <img src="../assets/img/user-img/user-profile.png" alt="user" class="box-img-profile-nav">
                         <div class="mt-2 ms-4" align="left">
-                            <h4 class="h4-pwks fw-500" style="margin-bottom: 0; padding-bottom: 1rem;">กิตติกรณ์ อรุณภพ</h4>
+                            <h4 class="h4-pwks fw-500" style="margin-bottom: 0; padding-bottom: 1rem;">{{ name }}</h4>
 
                             <p class="p-pwks" style="margin-bottom: 0; padding-bottom: 0; opacity: 0.5; margin-top: -10px;">
                                 <span>
@@ -77,6 +77,7 @@ export default {
             ],
             isModal: false,
             typeModal: '',
+            name: ''
         }
     },
     mounted() {
@@ -87,6 +88,8 @@ export default {
         } else if (this.openSubMenu === false) {
             this.tranformNavSlideClose()
         }
+
+        this.name = `${this.getStore().setAuth().first_name} ${this.getStore().setAuth().last_name}`
     },
     methods: {
         tranformNavSlideOpen() {
@@ -169,7 +172,7 @@ export default {
 
                 setTimeout(() => {
                     // window.location.href = '/pwks-ui/login'
-                    window.location.href = '/login'
+                    window.location.href = `${this.$config.public.baseURL}login`
                 }, 500);
                 
             }

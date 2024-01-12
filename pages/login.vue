@@ -24,6 +24,7 @@
                                 <label class="mt-2" style="color: var(--color-danger);" v-if="check.password">กรุณากรอกรหัสผ่าน</label>
                             </div>
                             <button type="button" class="btn btn-main mt-3" @click="login()">เข้าสู่ระบบ</button>
+                            <button class="btn btn-secondary ms-3 mt-3" @click="this.gotoPage('/')">ย้อนกลับ</button>
                         </form>
                     </div>
                 </div>
@@ -58,6 +59,10 @@ export default {
         }
     },
 
+    mounted() {
+
+    },
+
     methods: {
         async login () {
             if(this.username == ""){
@@ -83,8 +88,7 @@ export default {
                         this.getStore().setCheckLogin(true)
                         setTimeout(() => {
                             this.isModal = false
-                            // window.location.href = '/pwks-ui'
-                            window.location.href = '/'
+                            window.location.href = this.$config.public.baseURL
                         },1000)
                         
                     }else{

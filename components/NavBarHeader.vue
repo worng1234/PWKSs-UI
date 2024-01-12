@@ -11,6 +11,9 @@
                 <Icon name="ic:sharp-close" class="img-logo-pwks-nav" @click="clickOpenSubMenu(false)"
                     v-else-if="openSubMenu === true" />
             </div>
+            <div class="box-sub-nav-icon" v-else-if="!this.getStore().setCheckLogin()" >
+                <button type="button" class="btn btn-main" @click="this.gotoPage('/login')">เข้าสู่ระบบ</button>
+            </div>
         </div>
         <div style="position: fixed; z-index: 2; transform: translateX(-320px);" v-if="openSubMenu === true">
             <SubMenuNav :openSubMenu="openSubMenu" :clickOpenSubMenu="clickOpenSubMenu" :clickCloseSubMenu="clickCloseSubMenu"/>
@@ -39,9 +42,7 @@ export default {
             this.openSubMenu = false
         },
         gotoIndex(){
-            if(this.getStore().setCheckLogin()){
-                this.gotoPage('/')
-            }
+            this.gotoPage('/')
         }
     },
 }

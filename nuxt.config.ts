@@ -2,8 +2,7 @@
 export default defineNuxtConfig({
 
   app: {
-    // baseURL: '/pwks-ui/'
-    baseURL: '/'
+    baseURL: process.env.BASE_URL
   },
 
   devServer: {
@@ -38,4 +37,10 @@ export default defineNuxtConfig({
     { src: '~/plugins/createStore.js', mode: 'client' },
     { src: '~/plugins/createStructure.js' },
   ],
+
+  runtimeConfig: {
+    public:{
+      baseURL: process.env.BASE_URL
+    }
+  }
 })
