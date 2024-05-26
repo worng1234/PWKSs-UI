@@ -4,7 +4,7 @@
             <div class="block-bg-main">
                 <div class="p-table-schedule">
                     <div class="mt-3 mb-3">
-                        <h3>จัดการตารางสอน ปีการศึกษา 1/2566</h3>
+                        <h3>จัดการตารางสอน ปีการศึกษา {{ term }}/{{ year }}</h3>
                     </div>
                     <div class="mb-3" align="left">
                         <div class="row">
@@ -40,19 +40,20 @@
                                         <tbody v-if="listSchedule.length > 0" v-for="schedule in listSchedule">
                                             <tr>
                                                 <td class="day fm-kanit">{{ schedule.day }}</td>
-                                                <td class="active cursor-main" v-for="(subject, index) in schedule.subject">
+                                                <td class="active cursor-main"
+                                                    v-for="(subject, index) in schedule.subject">
                                                     <div v-if="schedule.subject[index].class != ''"
                                                         @click="openModal(schedule.day, schedule.column, index, 'edit', subject)">
                                                         <h4>{{ subject.code }}</h4>
                                                         <h4>{{ `${subject.class == 'vc' ? 'ปวช.' :
-                                                            subject.class}${subject.class == 'vc' ? ' ' :
-                                                                '/'}${subject.room}` }}</h4>
+                                            subject.class}${subject.class == 'vc' ? ' ' :
+                                                '/'}${subject.room}` }}</h4>
                                                         <div class="hover">
                                                             <h4>{{ subject.code }}</h4>
                                                             <h4 style="padding: 3px 0;">{{ subject.nameSubject }}</h4>
                                                             <p>{{ `${subject.class == 'vc' ? 'ปวช.' :
-                                                                subject.class}${subject.class == 'vc' ? ' ' :
-                                                                    '/'}${subject.room}` }}</p>
+                                            subject.class}${subject.class == 'vc' ? ' ' :
+                                                '/'}${subject.room}` }}</p>
                                                         </div>
                                                     </div>
                                                     <div v-else-if="schedule.subject[index].activity === true"
@@ -104,7 +105,7 @@
     </div>
 
     <Modal v-if="isModal" :closeModal="closeModal" :type="typeModal" :period="period" :daySchedule="daySchedule"
-        :column="column" :dataSchedule="dataSchedule" :manageSchedule="getSchedule"/>
+        :column="column" :dataSchedule="dataSchedule" :manageSchedule="getSchedule" />
 </template>
 
 <script>
@@ -124,7 +125,9 @@ export default {
             period: 0,
             daySchedule: '',
             dataSchedule: {},
-            column: ''
+            column: '',
+            term: this.getStore().setAuth() ? this.getStore().setAuth().term : 1,
+            year: this.getStore().setAuth() ? this.getStore().setAuth().year : 2566
         }
     },
     mounted() {
@@ -132,10 +135,12 @@ export default {
     },
     methods: {
         async getSchedule() {
+            let auth = this.getStore().setAuth()
+            
             const data = {
-                t_id: 2,
-                term: 1,
-                year: 2566
+                t_id: auth.id,
+                term: auth.term,
+                year: auth.year
             }
 
             let day = [
@@ -205,21 +210,21 @@ export default {
                                 try {
                                     let splitNameSubject = getDataSchedule[0][1].split("_");
 
-                                    if(splitNameSubject.length == 1){
+                                    if (splitNameSubject.length == 1) {
                                         dataSchedule.activity = true,
-                                        dataSchedule.activityName = getDataSchedule[0][1]
-                                    }else{
+                                            dataSchedule.activityName = getDataSchedule[0][1]
+                                    } else {
                                         dataSchedule.code = splitNameSubject[0]
                                         dataSchedule.nameSubject = splitNameSubject[1]
                                         dataSchedule.class = splitNameSubject[2]
                                         dataSchedule.room = splitNameSubject[3]
                                     }
-                                    
+
                                 } catch (error) {
                                     dataSchedule.activity = true,
-                                    dataSchedule.activityName = getDataSchedule[0][1]
+                                        dataSchedule.activityName = getDataSchedule[0][1]
                                 }
-                                
+
                             }
 
                             if (schedule.length == 0) {
@@ -1127,4 +1132,5 @@ export default {
         font-size: 1.1rem;
     }
 
-}</style>
+}
+</style>

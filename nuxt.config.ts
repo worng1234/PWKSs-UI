@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
 
   app: {
+    // !Deploy use route /PWKS-UI/
     baseURL: process.env.BASE_URL
   },
 

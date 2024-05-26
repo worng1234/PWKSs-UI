@@ -1,13 +1,12 @@
 import axios from '../api/structure';
 
 export default {
-    //Auth
-
+    //!Auth
     login: data => {
         return axios.api.post('/auth/login-teacher', data).then(response => response.data);
     },
 
-    //Schedule
+    //!Schedule
     getScheduleById: data => {
         return axios.api.post(`/schedule/byId`, data).then(response => response.data);
     },
@@ -18,5 +17,18 @@ export default {
 
     removeSchedule: data => {
         return axios.api.post(`/schedule/removeschedule`, data).then(response => response.data);
-    }
+    },
+
+    //!Teacher Subject
+    getSubjectByTId: data => {
+        return axios.api.post(`/subject/byTId`, data).then(response => response.data);
+    },
+
+    addTeacherSubject: data => {
+        return axios.api.post(`/subject/insert`, data).then(response => response.data);
+    },
+
+    editTeacherSubject: data => {
+        return axios.api.post(`/subject/edit`, data).then(response => response.data);
+    },
 }

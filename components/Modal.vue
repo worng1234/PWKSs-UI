@@ -4,7 +4,8 @@
 
             <div align="center" class="modal-main-pwks" v-if="typeModal == 'add-schedule'" v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <h2>เพิ่มตารางสอน</h2>
@@ -19,25 +20,20 @@
 
                         <div class="divider-solid" style="height: 2px;"></div>
 
-                        <div class="form-check form-switch mt-3">
-                            <input class="form-check-input form-check-input-h" type="checkbox" role="switch" id="activity-class"
-                                v-model="checkChangeSchedule">
-                            <label class="form-check-label ms-2 mt-1" for="activity-class">กิจกรรม</label>
+                        <div class="input-group me-3 input-class mt-3">
+                            <label class="input-group-text" for="class-add">รายวิชา</label>
+                            <select class="form-select" id="class-add" v-model="subject" @change="subjectCheck()">
+                                <option v-for="subject in dataSubject"
+                                    :value="`${subject.subject_code}_${subject.subject_name}`">{{ subject.subject_code
+                                    }} {{ subject.subject_name }}</option>
+                                <option value="act_1">ลูกเสือ</option>
+                                <option value="act_2">ชุมนุม</option>
+                                <option value="act_3">โฮมรูม</option>
+                                <option value="act_4">อารยะเกษตร</option>
+                            </select>
                         </div>
 
-                        <div class="input-group me-3 mt-3 input-detail" v-if="!checkChangeSchedule">
-                            <label class="input-group-text" for="class-add">รหัสวิชา</label>
-                            <input type="text" class="form-control" id="class-add" placeholder="กรอกรหัสวิชา"
-                                v-model="subjectCode">
-                        </div>
-
-                        <div class="input-group me-3 mt-3 input-detail" v-if="!checkChangeSchedule">
-                            <label class="input-group-text" for="class-add">ชื่อรายวิชา</label>
-                            <input type="text" class="form-control" id="class-add" placeholder="กรอกชื่อรายวิชา"
-                                v-model="subjectName">
-                        </div>
-
-                        <div class="d-flex mt-3" v-if="!checkChangeSchedule">
+                        <div class="d-flex mt-3" v-if="checkChangeSchedule">
                             <div class="input-group me-3 input-class">
                                 <label class="input-group-text" for="class-add">ม.</label>
                                 <select class="form-select" id="class-add" v-model="classSchedule" @change="vcCheck()">
@@ -60,14 +56,6 @@
                             </div>
                         </div>
 
-                        <div class="mt-3" v-else-if="checkChangeSchedule">
-                            <div class="input-group me-3 input-detail">
-                                <label class="input-group-text" for="class-add">กิจกรรม</label>
-                                <input type="text" class="form-control" id="class-add" placeholder="กรอกรายชื่อกิจกรรม"
-                                    v-model="activitySchedule">
-                            </div>
-                        </div>
-
                         <div class="d-flex justify-content-center danger-input mt-3" v-if="checkValidate.schedule">
                             <Icon name="ph:warning-circle-bold" class="mt-1 me-1" />
                             <p>กรุณากรอกข้อมูลให้ครบถ้วน</p>
@@ -85,7 +73,8 @@
             <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'edit-schedule'"
                 v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <h2>แก้ไขตารางสอน</h2>
@@ -100,9 +89,9 @@
 
                         <div class="divider-solid" style="height: 2px;"></div>
 
-                        <div class="form-check form-switch mt-3">
-                            <input class="form-check-input form-check-input-h" type="checkbox" role="switch" id="activity-class"
-                                v-model="checkChangeSchedule">
+                        <!-- <div class="form-check form-switch mt-3">
+                            <input class="form-check-input form-check-input-h" type="checkbox" role="switch"
+                                id="activity-class" v-model="checkChangeSchedule">
                             <label class="form-check-label ms-2 mt-1" for="activity-class">กิจกรรม</label>
                         </div>
 
@@ -116,9 +105,22 @@
                             <label class="input-group-text" for="class-add">ชื่อรายวิชา</label>
                             <input type="text" class="form-control" id="class-add" placeholder="กรอกชื่อรายวิชา"
                                 v-model="subjectName">
+                        </div> -->
+
+                        <div class="input-group me-3 input-class mt-3">
+                            <label class="input-group-text" for="class-add">รายวิชา</label>
+                            <select class="form-select" id="class-add" v-model="subject" @change="subjectCheck()">
+                                <option v-for="subject in dataSubject"
+                                    :value="`${subject.subject_code}_${subject.subject_name}`">{{ subject.subject_code
+                                    }} {{ subject.subject_name }}</option>
+                                <option value="act_1">ลูกเสือ</option>
+                                <option value="act_2">ชุมนุม</option>
+                                <option value="act_3">โฮมรูม</option>
+                                <option value="act_4">อารยะเกษตร</option>
+                            </select>
                         </div>
 
-                        <div class="d-flex mt-3" v-if="!checkChangeSchedule">
+                        <div class="d-flex mt-3" v-if="checkChangeSchedule">
                             <div class="input-group me-3 input-class">
                                 <label class="input-group-text" for="class-edit">ม.</label>
                                 <select class="form-select" id="class-edit" v-model="classSchedule" @change="vcCheck()">
@@ -170,7 +172,8 @@
             <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'attend-class'"
                 v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <h2>เช็คชื่อ</h2>
@@ -201,10 +204,10 @@
                                             style="border-radius: 0 8px 0 0;">ขาด</th>
                                     </tr>
                                 </thead>
-                                <tbody class="fs-body" align="center" >
+                                <tbody class="fs-body" align="center">
                                     <tr v-for="(student, index) in listStudent">
-                                        <td align="left" style="font-size: 0.9rem;">{{ student.preName }} 
-                                        {{ student.firstName }} {{student.lastName }}</td>
+                                        <td align="left" style="font-size: 0.9rem;">{{ student.preName }}
+                                            {{ student.firstName }} {{ student.lastName }}</td>
                                         <td class="color-attend">
                                             <input class="form-check-input" type="radio" :name="`attend-${index}`"
                                                 :id="`attend-${index}`" checked>
@@ -258,7 +261,8 @@
 
             <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'success'" v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <Icon name="ph:check-circle" class="success-icon mb-2 mt-2" />
@@ -271,9 +275,27 @@
                 </div>
             </div>
 
+            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'warning-notify'"
+                v-click-outside="closeModal">
+                <div align="right">
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
+                </div>
+                <div class="modal-title-pwks" align="center">
+                    <Icon name="ph:warning-circle" class="warning-icon mb-2 mt-2" />
+                    <h2>{{ textWarningHead }}</h2>
+                    <h4 class="fw-400">{{ textWarningContent }}</h4>
+                </div>
+
+                <div class="modal-footer-pwks mt-4" align="center">
+                    <button class="btn btn-warning rounded-pill fm-kanit" @click="closeModal">ปิด</button>
+                </div>
+            </div>
+
             <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'danger'" v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <Icon name="ph:x-circle" class="danger-icon mb-2 mt-2" />
@@ -288,7 +310,8 @@
 
             <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'warning'">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <Icon name="ph:question" class="warning-icon mb-2 mt-2" />
@@ -308,9 +331,11 @@
                 </div>
             </div>
 
-            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'error-login'" v-click-outside="closeModal">
+            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'error-login'"
+                v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <Icon name="ph:x-circle" class="danger-icon mb-2 mt-2" />
@@ -323,9 +348,11 @@
                 </div>
             </div>
 
-            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'warning-login'" v-click-outside="closeModal">
+            <div align="center" class="modal-main-pwks" v-else-if="typeModal == 'warning-login'"
+                v-click-outside="closeModal">
                 <div align="right">
-                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main" @click="closeModal" />
+                    <Icon name="material-symbols:close-rounded" class="close-modal-icon cursor-main"
+                        @click="closeModal" />
                 </div>
                 <div class="modal-title-pwks" align="center">
                     <Icon name="ph:question" class="warning-icon mb-2 mt-2" />
@@ -377,10 +404,19 @@ export default {
         },
         manageSchedule: {
             type: Function,
-        }
+        },
+        textWarningHead: {
+            type: String,
+        },
+        textWarningContent: {
+            type: String,
+        },
     },
     data() {
         return {
+            t_id: this.getStore().setAuth() ? this.getStore().setAuth().id : 1,
+            term: this.getStore().setAuth() ? this.getStore().setAuth().term : 1,
+            year: this.getStore().setAuth() ? this.getStore().setAuth().year : 2566,
             periodArray: [1, 2, 3, 4, 5, 6, 7, 8, 9],
             timePeriod: [
                 '08.40 - 09.30',
@@ -404,21 +440,51 @@ export default {
             vcGrade: false,
             checkValidate: {
                 schedule: false
-            }
+            },
+            dataSubject: [],
+            subject: '',
+            activitySubject: [
+                {
+                    key: 'act_1',
+                    name: 'ลูกเสือเนตนารี'
+                },
+                {
+                    key: 'act_2',
+                    name: 'ชุมนุม'
+                },
+                {
+                    key: 'act_3',
+                    name: 'แนะแนว'
+                },
+                {
+                    key: 'act_4',
+                    name: 'อบรม'
+                },
+                {
+                    key: 'act_5',
+                    name: 'บำเพ็ญประโยชน์'
+                },
+            ]
         }
     },
-    mounted() {
+    async mounted() {
         this.typeModal = this.type
-
-        if(this.dataSchedule.class !== undefined && this.dataSchedule.class != ''){
-            this.subjectCode = this.dataSchedule.code
-            this.subjectName = this.dataSchedule.nameSubject
+        await this.getSubject()
+        if (this.dataSchedule.class !== undefined && this.dataSchedule.class != '') {
+            console.log(this.dataSchedule, `${this.dataSchedule.code}_${this.dataSchedule.nameSubject}`);
+            this.subject = `${this.dataSchedule.code}_${this.dataSchedule.nameSubject}`
             this.classSchedule = this.dataSchedule.class
             this.roomSchedule = this.dataSchedule.room
+            this.checkChangeSchedule = true
 
-        }else if (this.dataSchedule.activityName !== undefined && this.dataSchedule.activityName != ''){
-            this.checkChangeSchedule = this.dataSchedule.activity
-            this.activitySchedule = this.dataSchedule.activityName
+        } else if (this.dataSchedule.activityName !== undefined && this.dataSchedule.activityName != '') {
+            for (const s of this.activitySubject) {
+                if(s.name == this.dataSchedule.activityName){
+                    this.subject = s.key
+                    break
+                }
+            }
+            this.checkChangeSchedule = false
         }
 
     },
@@ -429,25 +495,31 @@ export default {
             if (checkValidate) {
                 this.checkValidate.schedule = false
 
+                let name = this.subjectCheck()
+                let subject = ''
+
+                if (name != '') {
+                    subject = name
+
+                } else {
+                    subject = `${this.subject}_${this.classSchedule}_${this.roomSchedule}`
+                }
+
                 let data = {
-                    t_id: 2,
+                    t_id: this.t_id,
                     column: this.column,
-                    activity: this.checkChangeSchedule === false ? '' : this.activitySchedule,
-                    class: this.classSchedule,
-                    room: this.roomSchedule,
-                    code: this.subjectCode,
-                    name: this.subjectName,
-                    term: 1,
-                    year: 2566,
+                    subject: subject,
+                    term: this.term,
+                    year: this.year,
                 }
 
                 this.typeModal = 'loading'
 
-                await callApi.addAndEditSchedule(data).then( res => {
-                    if(res.code == 0){
+                await callApi.addAndEditSchedule(data).then(res => {
+                    if (res.code == 0) {
                         this.typeModal = 'success'
                         this.manageSchedule()
-                    }else{
+                    } else {
                         this.typeModal = 'danger'
                     }
                 })
@@ -455,35 +527,66 @@ export default {
         },
         async removeData(type) {
             this.typeModal = 'loading'
-            if(type == 'edit-schedule'){
+            if (type == 'edit-schedule') {
 
                 let data = {
-                    t_id: 2,
+                    t_id: this.t_id,
                     column: this.column,
-                    term: 1,
-                    year: 2566,
+                    term: this.term,
+                    year: this.year,
                 }
 
-                await callApi.removeSchedule(data).then( res => {
-                    if(res.code == 0){
+                await callApi.removeSchedule(data).then(res => {
+                    if (res.code == 0) {
                         this.typeModal = 'success'
                         this.manageSchedule()
-                    }else{
+                    } else {
                         this.typeModal = 'danger'
                     }
                 })
             }
         },
+
+        async getSubject() {
+            await callApi.getSubjectByTId({ t_id: this.t_id }).then(res => {
+                if (res.code == 0) {
+                    this.dataSubject = res.result;
+                }
+            }).catch(err => {
+
+            })
+        },
+
+        subjectCheck() {
+            let check = false
+            let name = ''
+
+            for (const s of this.activitySubject) {
+                if (s.key == this.subject) {
+                    this.checkChangeSchedule = false
+                    check = true
+                    name = s.name
+                    break
+                }
+            }
+
+            if (!check) {
+                this.checkChangeSchedule = true
+            }
+
+            return name
+        },
+
         validateSchedule() {
-            if (this.checkChangeSchedule) {
-                if (this.activitySchedule == '') {
+            if (!this.checkChangeSchedule) {
+                if (this.subject == '') {
                     this.checkValidate.schedule = true
 
                     return false
                 }
 
-            } else if (!this.checkChangeSchedule) {
-                if (this.classSchedule == '' || this.roomSchedule == '' || this.subjectCode == '' || this.subjectName == '') {
+            } else if (this.checkChangeSchedule) {
+                if (this.classSchedule == '' || this.roomSchedule == '' || this.subject == '') {
                     this.checkValidate.schedule = true
 
                     return false
@@ -503,7 +606,7 @@ export default {
                 this.roomList = [1, 2, 3, 4, 5, 6]
             }
         },
-        warningModal(){
+        warningModal() {
             this.typeModal = 'warning'
         },
         cancelRemove() {
@@ -583,7 +686,7 @@ export default {
     width: 2.5rem;
 }
 
-.form-check-input-h{
+.form-check-input-h {
     height: 1.5rem !important;
 }
 
@@ -631,11 +734,11 @@ export default {
 }
 
 /* Input Class And Detail */
-.input-detail{
+.input-detail {
     width: 100%;
 }
 
-.input-class{
+.input-class {
     width: 100%;
 }
 
@@ -644,11 +747,11 @@ export default {
         max-width: 320px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 290px;
     }
 
-    .input-class{
+    .input-class {
         width: 138px;
     }
 
@@ -660,11 +763,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 295px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 290px;
     }
 
@@ -679,11 +782,11 @@ export default {
         max-width: 360px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 320px;
     }
 
-    .input-class{
+    .input-class {
         width: 152px;
     }
 
@@ -695,11 +798,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 325px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 325px;
     }
 
@@ -714,11 +817,11 @@ export default {
         max-width: 375px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 350px;
     }
 
-    .input-class{
+    .input-class {
         width: 167px;
     }
 
@@ -730,11 +833,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 345px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 345px;
     }
 
@@ -749,11 +852,11 @@ export default {
         max-width: 390px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 360px;
     }
 
-    .input-class{
+    .input-class {
         width: 172px;
     }
 
@@ -765,11 +868,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 360px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 360px;
     }
 
@@ -784,11 +887,11 @@ export default {
         max-width: 420px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 380px;
     }
 
-    .input-class{
+    .input-class {
         width: 182px;
     }
 
@@ -800,11 +903,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 390px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 390px;
     }
 
@@ -819,11 +922,11 @@ export default {
         max-width: 490px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 460px;
     }
 
-    .input-class{
+    .input-class {
         width: 222px;
     }
 
@@ -835,11 +938,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 460px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 460px;
     }
 
@@ -854,11 +957,11 @@ export default {
         max-width: 590px;
     }
 
-    .input-detail{
+    .input-detail {
         width: 480px;
     }
 
-    .input-class{
+    .input-class {
         width: 252px;
     }
 
@@ -870,11 +973,11 @@ export default {
         font-size: 0.8rem;
     }
 
-    .table{
+    .table {
         width: 470px !important;
     }
 
-    .form-floating{
+    .form-floating {
         width: 470px;
     }
 
@@ -882,5 +985,4 @@ export default {
         height: 0.9rem;
     }
 }
-
 </style>
