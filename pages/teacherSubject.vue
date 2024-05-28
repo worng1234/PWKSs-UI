@@ -5,7 +5,7 @@
                 <div class="p-teacher-subject">
 
                     <div class="mt-3 mb-3">
-                        <h3>เพิ่มรายวิชา</h3>
+                        <h3>{{ textHead }}</h3>
                     </div>
 
                     <div class="box-add-subject mt-3 mb-3">
@@ -27,10 +27,20 @@
                             <p>กรุณากรอกข้อมูลให้ครบถ้วน</p>
                         </div>
 
-                        <div class="modal-footer-pwks mt-3" align="center">
-                            <button class="btn btn-main rounded-pill fm-kanit" @click="submitForm()">
+                        <div class="modal-footer-pwks mt-3" align="center" v-if="!editForm">
+                            <button class="btn btn-main rounded-pill fm-kanit me-2" @click="submitForm()">
                                 <Icon name="humbleicons:save" style="margin-top: -3%; font-size: 1.2rem;" />
                                 บันทึก
+                            </button>
+                        </div>
+
+                        <div class="modal-footer-pwks mt-3" align="center" v-else-if="editForm">
+                            <button class="btn btn-main rounded-pill fm-kanit me-2" @click="submitForm()">
+                                <Icon name="humbleicons:save" style="margin-top: -3%; font-size: 1.2rem;" />
+                                แก้ไข
+                            </button>
+                            <button class="btn btn-danger rounded-pill fm-kanit" @click="resetForm()">
+                                ยกเลิก
                             </button>
                         </div>
 
@@ -56,9 +66,15 @@
                                     <td class="fm-kanit fw-500">{{ subject.subject_name }}</td>
                                     <td class="fm-kanit fw-500">{{ subject.term }}/{{ subject.year }}</td>
                                     <td class="fm-kanit fw-500">
-                                        <button class="btn btn-main" style="padding: 1px 10px !important;"
+                                        <button class="btn btn-main me-2" style="padding: 1px 10px !important;"
                                             @click="preEdit(subject)">
-                                            <Icon name="fluent:document-search-24-filled"
+                                            <Icon name="material-symbols:edit-document-outline"
+                                                style="padding: 0 0; margin: 0 0; font-size: 1.5rem;"
+                                                class="fm-kanit" />
+                                        </button>
+                                        <button class="btn btn-danger" style="padding: 1px 10px !important;"
+                                            @click="removeSubject(subject)">
+                                            <Icon name="material-symbols:delete-outline"
                                                 style="padding: 0 0; margin: 0 0; font-size: 1.5rem;"
                                                 class="fm-kanit" />
                                         </button>
@@ -87,9 +103,8 @@ import callApi from '../api/callApi'
 
 export default {
     setup() {
-
-
-        return {}
+        const swal = getCurrentInstance().appContext.config.globalProperties;
+        return {swal}
     },
 
     data() {
@@ -111,6 +126,8 @@ export default {
             typeModal: '',
             textWarningHead: 'ไม่สำเร็จ',
             textWarningContent: 'มีรายวิชานี้อยู่แล้ว',
+            textHead: 'เพิ่มรายวิชา',
+            editForm: false
         }
     },
 
@@ -150,6 +167,9 @@ export default {
             this.subjectCode = data.subject_code
             this.subjectName = data.subject_name
 
+            this.textHead = 'แก้ไขรายวิชา'
+            this.editForm = true
+
             document.getElementById('to-top-subject').scrollIntoView({ behavior: "smooth", block: "start" });
         },
 
@@ -172,14 +192,11 @@ export default {
                 
                 setTimeout(() => {
                     if(res.code == 0){
-                        this.typeModal = 'success'
-                        this.isModal = true
+                        this.alertModal('success', 'สำเร็จ', 'เพิ่มรายวิชาสำเร็จ')
                     }else if (res.code == 204){
-                        this.typeModal = 'warning-notify'
-                        this.isModal = true
+                        this.alertModal('warning', 'ไม่สำเร็จ', 'มีรายวิชานี้อยู่แล้ว')
                     }else if (res.code == 400) {
-                        this.typeModal = 'danger'
-                        this.isModal = true
+                        this.alertModal('error', 'ไม่สำเร็จ', 'ไม่สามารถเพิ่มรายวิชาได้')
                     }
                 }, 500);
                 
@@ -188,8 +205,7 @@ export default {
                 this.isModal = false
                 
                 setTimeout(() => {
-                    this.typeModal = 'danger'
-                    this.isModal = true
+                    this.alertModal('error', 'ไม่สำเร็จ', 'ไม่สามารถเพิ่มรายวิชาได้')
                 }, 500);
             })
 
@@ -213,14 +229,11 @@ export default {
                 
                 setTimeout(() => {
                     if(res.code == 0){
-                        this.typeModal = 'success'
-                        this.isModal = true
+                        this.alertModal('success', 'สำเร็จ', 'แก้ไขรายวิชาสำเร็จ')
                     }else if (res.code == 204){
-                        this.typeModal = 'warning-notify'
-                        this.isModal = true
+                        this.alertModal('warning', 'ไม่สำเร็จ', 'ไม่พบรายวิชาที่แก้ไข')
                     }else if (res.code == 400) {
-                        this.typeModal = 'danger'
-                        this.isModal = true
+                        this.alertModal('error', 'ไม่สำเร็จ', 'ไม่สามารถเพิ่มรายวิชาได้')
                     }
                 }, 500);
 
@@ -229,13 +242,39 @@ export default {
                 this.isModal = false
                 
                 setTimeout(() => {
-                    this.typeModal = 'danger'
-                    this.isModal = true
+                    this.alertModal('error', 'ไม่สำเร็จ', 'ไม่สามารถเพิ่มรายวิชาได้')
                 }, 500);
                 
             })
 
             this.resetForm()
+        },
+
+        async removeSubject(data) {
+            await this.swal.$swal.fire({
+                title: 'ลบข้อมูล',
+                text: 'ต้องการลบรายวิชานี้หรือไม่',
+                icon: 'question',
+                allowOutsideClick: false,
+                confirmButtonText: 'ลบ',
+                confirmButtonColor: '#fbce02',
+                showCancelButton: true,
+                cancelButtonText: 'ยกเลิก'
+            }).then( async res => {
+                console.log(res);
+                if(res && res.isConfirmed){
+                    await callApi.removeTeacherSubject({ id: data.id}).then( res => {
+                        if(res.code == 0){
+                            this.alertModal('success', 'สำเร็จ', 'ดำเนินการลบข้อมูลเรียบร้อยแล้ว')
+                        }else{
+                            throw Error('')
+                        }
+                    }).carch( err => {
+                        this.alertModal('error', 'ผิดพลาด', 'เกิดข้อผิดพลาดไม่สามารถลบข้อมูลได้')
+                    })
+                }
+            })
+            
         },
 
         validateForm() {
@@ -258,6 +297,9 @@ export default {
             this.id = 0
             this.subjectCode = ''
             this.subjectName = ''
+
+            this.textHead = 'เพิ่มรายวิชา'
+            this.editForm = false
         }
     },
 }

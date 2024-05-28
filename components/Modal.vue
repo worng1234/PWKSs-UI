@@ -28,8 +28,8 @@
                                     }} {{ subject.subject_name }}</option>
                                 <option value="act_1">ลูกเสือ</option>
                                 <option value="act_2">ชุมนุม</option>
-                                <option value="act_3">โฮมรูม</option>
-                                <option value="act_4">อารยะเกษตร</option>
+                                <option value="act_3">แนะแนว</option>
+                                <option value="act_4">อบรม</option>
                             </select>
                         </div>
 
@@ -115,8 +115,8 @@
                                     }} {{ subject.subject_name }}</option>
                                 <option value="act_1">ลูกเสือ</option>
                                 <option value="act_2">ชุมนุม</option>
-                                <option value="act_3">โฮมรูม</option>
-                                <option value="act_4">อารยะเกษตร</option>
+                                <option value="act_3">แนะแนว</option>
+                                <option value="act_4">อบรม</option>
                             </select>
                         </div>
 
@@ -548,7 +548,7 @@ export default {
         },
 
         async getSubject() {
-            await callApi.getSubjectByTId({ t_id: this.t_id }).then(res => {
+            await callApi.getSubjectByYearAndYear({ t_id: this.t_id, term: this.term, year: this.year, }).then(res => {
                 if (res.code == 0) {
                     this.dataSubject = res.result;
                 }

@@ -126,6 +126,10 @@ body {
   background-color: #ececec;
 }
 
+.p-box-main {
+  padding: 0.25rem 3rem;
+}
+
 /* FONT */
 .fw-400 {
   font-weight: 400;

@@ -1,6 +1,10 @@
 import { store } from '~/store/manageStore'
 
 const globalMixin = {
+    setup() {
+        const swal = getCurrentInstance().appContext.config.globalProperties;
+        return {swal}
+    },
     methods: {
         getStore() {
             return store
@@ -44,6 +48,33 @@ const globalMixin = {
 
             return formatted
         },
+
+        alertModal(type, title, content){
+            let color = ''
+
+            if(type == 'success'){
+                color = '#338309'
+
+            }else if (type == 'warning'){
+                color = '#fbce02'
+
+            } else if (type == 'error'){
+                color = '#bc0000'
+                
+            }
+
+            this.swal.$swal.fire({
+                icon: type,
+                title: title,
+                text: content,
+                confirmButtonText: 'ปิด',
+                confirmButtonColor: color,
+            }).then( res => {
+                if(res && type == 'success'){
+                    window.location.reload()
+                }
+            })
+        }
 
     }
 }

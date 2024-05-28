@@ -24,11 +24,28 @@ export default {
         return axios.api.post(`/subject/byTId`, data).then(response => response.data);
     },
 
+    getSubjectByYearAndYear: data => {
+        return axios.api.post(`/subject/byTermAndYear`, data).then(response => response.data);
+    },
+
     addTeacherSubject: data => {
         return axios.api.post(`/subject/insert`, data).then(response => response.data);
     },
 
     editTeacherSubject: data => {
         return axios.api.post(`/subject/edit`, data).then(response => response.data);
+    },
+
+    removeTeacherSubject: data => {
+        return axios.api.post(`/subject/remove`, data).then(response => response.data);
+    },
+
+    //!Teacher Consult
+    getConsult: data => {
+        return axios.api.post(`/consult/byTId`, data).then(response => response.data);
+    },
+
+    editConsult: data => {
+        return axios.api.post(`/consult/edit`, data).then(response => response.data);
     },
 }
